@@ -1,3 +1,4 @@
+// 7-airport.js
 export default class Airport {
     constructor(name, code) {
       this._name = name;
@@ -21,7 +22,7 @@ export default class Airport {
     }
   
     get [Symbol.toStringTag]() {
-        return this._code;
+      return this._code;
     }
   }
   
