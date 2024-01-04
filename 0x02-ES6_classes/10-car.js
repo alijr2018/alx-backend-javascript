@@ -1,8 +1,8 @@
-const carProperties = Symbol('carProperties');
+const carData = Symbol('carData');
 
 export default class Car {
   constructor(brand, motor, color) {
-    this[carProperties] = {
+    this[carData] = {
       _brand: brand,
       _motor: motor,
       _color: color,
@@ -10,31 +10,31 @@ export default class Car {
   }
 
   get brand() {
-    return this[carProperties]._brand;
+    return this[carData]._brand;
   }
 
   set brand(newBrand) {
-    this[carProperties]._brand = newBrand;
+    this[carData]._brand = newBrand;
   }
 
   get motor() {
-    return this[carProperties]._motor;
+    return this[carData]._motor;
   }
 
   set motor(newMotor) {
-    this[carProperties]._motor = newMotor;
+    this[carData]._motor = newMotor;
   }
 
   get color() {
-    return this[carProperties]._color;
+    return this[carData]._color;
   }
 
   set color(newColor) {
-    this[carProperties]._color = newColor;
+    this[carData]._color = newColor;
   }
 
   cloneCar() {
-    const { _brand, _motor, _color } = this[carProperties];
+    const { _brand, _motor, _color } = this[carData];
     return new this.constructor(_brand, _motor, _color);
   }
 }
