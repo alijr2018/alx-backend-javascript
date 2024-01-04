@@ -1,8 +1,8 @@
 export default class HolbertonCourse {
   constructor(name, length, students) {
-    this._name = this._validateString(name, 'Name');
-    this._length = this._validateNumber(length, 'Length');
-    this._students = this._validateStudents(students);
+    this._name = HolbertonCourse._validateString(name, 'Name');
+    this._length = HolbertonCourse._validateNumber(length, 'Length');
+    this._students = HolbertonCourse._validateStudents(students);
   }
 
   get name() {
@@ -10,7 +10,7 @@ export default class HolbertonCourse {
   }
 
   set name(newName) {
-    this._name = this._validateString(newName, 'Name');
+    this._name = HolbertonCourse._validateString(newName, 'Name');
   }
 
   get length() {
@@ -18,7 +18,7 @@ export default class HolbertonCourse {
   }
 
   set length(newLength) {
-    this._length = this._validateNumber(newLength, 'Length');
+    this._length = HolbertonCourse._validateNumber(newLength, 'Length');
   }
 
   get students() {
@@ -26,24 +26,24 @@ export default class HolbertonCourse {
   }
 
   set students(newStudents) {
-    this._students = this._validateStudents(newStudents);
+    this._students = HolbertonCourse._validateStudents(newStudents);
   }
 
-  _validateString(value, propertyName) {
+  static _validateString(value, propertyName) {
     if (typeof value !== 'string') {
       throw new TypeError(`${propertyName} must be a string`);
     }
     return value;
   }
 
-  _validateNumber(value, propertyName) {
+  static _validateNumber(value, propertyName) {
     if (typeof value !== 'number') {
       throw new TypeError(`${propertyName} must be a number`);
     }
     return value;
   }
 
-  _validateStudents(students) {
+  static _validateStudents(students) {
     if (!Array.isArray(students) || students.some((student) => typeof student !== 'string')) {
       throw new TypeError('Students must be an array of strings');
     }
