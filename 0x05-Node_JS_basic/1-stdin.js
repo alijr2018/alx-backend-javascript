@@ -11,6 +11,7 @@ process.stdin.once('data', (chunk) => {
   }
 
   process.stdout.write(`Your name is: ${name}\n`);
+  process.stdout.write('This important software is now closing\n');
 });
 
 process.on('SIGINT', () => {
