@@ -1,22 +1,20 @@
 // 1-stdin.js
 
-process.stdin.setEncoding('utf8');
+process.stdout.write('Welcome to Holberton School, what is your name?\n');
 
-console.log('Welcome to Holberton School, what is your name?');
+process.stdin.once('data', (chunk) => {
+  const name = chunk.toString().trim();
 
-process.stdin.once('data', (data) => {
-  const input = data.trim();
-
-  if (input !== '') {
-    console.log(`Your name is: ${input}`);
-  } else {
-    console.log('Your name is: ');
+  if (name.toLowerCase() === 'exit') {
+    process.stdout.write('This important software is now closing\n');
+    process.exit(0);
   }
 
-  process.exit(0);
+  process.stdout.write(`Your name is: ${name}\n`);
+  process.stdout.write('This important software is now closing\n');
 });
 
 process.on('SIGINT', () => {
-  console.log('This important software is now closing');
+  process.stdout.write('This important software is now closing\n');
   process.exit(0);
 });
