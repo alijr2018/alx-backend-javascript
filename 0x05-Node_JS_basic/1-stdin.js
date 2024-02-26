@@ -18,3 +18,8 @@ process.stdin.on('data', (data) => {
     console.log('Your name is: ');
   }
 });
+
+process.on('SIGINT', () => {
+  console.log('This important software is now closing');
+  process.exit(0);
+});
