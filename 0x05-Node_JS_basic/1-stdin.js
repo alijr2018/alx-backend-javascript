@@ -1,20 +1,20 @@
 // 1-stdin.js
 
-process.stdout.write('Welcome to Holberton School, what is your name?\n');
+const readline = require('readline');
 
-process.stdin.once('data', (chunk) => {
-  const name = chunk.toString().trim();
-
-  if (name.toLowerCase() === 'exit') {
-    process.stdout.write('This important software is now closing\n');
-    process.exit(0);
-  }
-
-  process.stdout.write(`Your name is: ${name}\n`);
-  process.stdout.write('This important software is now closing\n');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
 });
 
-process.on('SIGINT', () => {
-  process.stdout.write('This important software is now closing\n');
+console.log('Welcome to Holberton School, what is your name?');
+
+rl.on('line', (name) => {
+  console.log(`Your name is: ${name}`);
+  console.log('This important software is now closing');
+  rl.close();
+});
+
+rl.on('close', () => {
   process.exit(0);
 });
