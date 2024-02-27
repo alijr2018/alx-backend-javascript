@@ -1,53 +1,38 @@
 // 2-read_file.js
 
 const fs = require('fs');
-const csv = require('csv-parser');
 
 function countStudents(path) {
   try {
-    const data = fs.readFileSync(path, 'utf8');
-    const students = [];
-    const fields = {};
+    const data = fs.readFileSync(path, 'utf-8');
 
-    if (!data) {
-      throw new Error('Cannot load the database');
-    }
+    const rows = data.trim().split('\n');
 
-    const parseOptions = {
-      skipLines: 1,
-      mapHeaders: ({ header }) => header.trim(),
-    };
+    let totalStudents = 0;
+    let csStudents = 0;
+    let sweStudents = 0;
+    const csList = [];
+    const sweList = [];
 
-    fs.createReadStream(path)
-      .pipe(csv(parseOptions))
-      .on('data', (row) => {
-        students.push(row);
-        for (const field in row) {
-          if (Object.prototype.hasOwnProperty.call(row, field)) {
-            if (!fields[field]) {
-              fields[field] = [];
-            }
-            if (row[field].trim() !== '') {
-              fields[field].push(row[field].trim());
-            }
-          }
-        }
-      })
-      .on('end', () => {
-        const numberOfStudents = students.length;
+    rows.forEach((row) => {
+      const [firstname, , , field] = row.split(',');
 
-        console.log(`Number of students: ${numberOfStudents}`);
+      if (field === 'CS') {
+        csStudents += 1;
+        csList.push(firstname);
+      } else if (field === 'SWE') {
+        sweStudents += 1;
+        sweList.push(firstname);
+      }
 
-        for (const field in fields) {
-          if (Object.prototype.hasOwnProperty.call(fields, field)) {
-            const count = fields[field].length;
-            const list = fields[field].join(', ');
-            console.log(`Number of students in ${field}: ${count}. List: ${list}`);
-          }
-        }
-      });
+      totalStudents += 1;
+    });
+
+    console.log(`Number of students: ${totalStudents}`);
+    console.log(`Number of students in CS: ${csStudents}. List: ${csList.join(', ')}`);
+    console.log(`Number of students in SWE: ${sweStudents}. List: ${sweList.join(', ')}`);
   } catch (error) {
-    console.error(error.message);
+    throw new Error('Cannot load the database');
   }
 }
 
