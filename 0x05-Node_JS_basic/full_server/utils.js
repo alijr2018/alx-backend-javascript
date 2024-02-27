@@ -1,12 +1,14 @@
 // utils.js
 
-import fs from 'fs/promises';
+import { promises as fsPromises } from 'fs';
 
 export const readDatabase = async (filePath) => {
   try {
-    const data = await fs.readFile(filePath, 'utf-8');
-    return processedData;
+    const data = await fsPromises.readFile(filePath, 'utf8');
+    return data;
   } catch (error) {
-    throw new Error('Cannot load the database');
+    throw new Error(`Cannot read database: ${error.message}`);
   }
 };
+
+export default readDatabase;

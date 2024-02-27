@@ -5,26 +5,29 @@ import { readDatabase } from '../utils';
 class StudentsController {
   static async getAllStudents(req, res) {
     try {
-      const data = await readDatabase('path/to/database.csv');
-
-      res.status(200).send('This is the list of our students\n');
+      const data = await readDatabase('./database.csv');
+      res.status(200).send(data);
     } catch (error) {
-      res.status(500).send(error.message);
+      res.status(500).send(`Cannot load the database: ${error.message}`);
     }
   }
 
   static async getAllStudentsByMajor(req, res) {
-    try {
-      const major = req.params.major.toUpperCase();
-      if (major !== 'CS' && major !== 'SWE') {
-        throw new Error('Major parameter must be CS or SWE');
-      }
-      const data = await readDatabase('path/to/database.csv');
+    const { major } = req.params;
 
-      res.status(200).send(`List: LIST_OF_FIRSTNAMES_IN_THE_${major}_FIELD\n`);
-    } catch (error) {
-      res.status(500).send(error.message);
+    if (major !== 'CS' && major !== 'SWE') {
+      return res.status(500).send('Major parameter must be CS or SWE');
     }
+
+    try {
+      const data = await readDatabase('./database.csv');
+
+      res.status(200).send(data);
+    } catch (error) {
+      res.status(500).send(`Cannot load the database: ${error.message}`);
+    }
+
+    return res.status(500).send('Unexpected error occurred');
   }
 }
 
