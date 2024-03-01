@@ -29,13 +29,17 @@ function countStudents(path) {
 
     console.log(`Number of students: ${totalStudents}`);
 
+    const { hasOwnProperty } = Object.prototype;
     for (const field in students) {
-      const count = students[field].length;
-      const list = students[field].join(', ');
-      console.log(`Number of students in ${field}: ${count}. List: ${list}`);
+      if (hasOwnProperty.call(students, field)) {
+        const count = students[field].length;
+        const list = students[field].join(', ');
+        console.log(`Number of students in ${field}: ${count}. List: ${list}`);
+      }
     }
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 }
 
